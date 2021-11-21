@@ -1,0 +1,26 @@
+# Uncomment the next line to define a global platform for your project
+# platform :ios, '9.0'
+
+target 'QuanLyChiTieuCaNhan' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for QuanLyChiTieuCaNhan
+  pod 'RxSwift', '6.1.0'
+  pod 'RxCocoa', '6.1.0'
+  pod 'Action','5.0.0'
+  pod 'R.swift','5.4.0'
+  pod 'IQKeyboardManager'
+  pod 'UITextView+Placeholder'
+  pod 'RealmSwift','10.15.1'
+  pod 'FSCalendar'
+  pod 'Charts'
+end
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      # https://github.com/CocoaPods/CocoaPods/issues/9884
+     config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
+    end
+ end
+end

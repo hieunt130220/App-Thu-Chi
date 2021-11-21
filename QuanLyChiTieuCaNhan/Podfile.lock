@@ -1,0 +1,68 @@
+PODS:
+  - Action (5.0.0):
+    - RxCocoa (~> 6.0)
+    - RxSwift (~> 6.0)
+  - Charts (3.6.0):
+    - Charts/Core (= 3.6.0)
+  - Charts/Core (3.6.0)
+  - FSCalendar (2.8.2)
+  - IQKeyboardManager (6.5.9)
+  - R.swift (5.4.0):
+    - R.swift.Library (~> 5.3.0)
+  - R.swift.Library (5.3.0)
+  - Realm (10.15.1):
+    - Realm/Headers (= 10.15.1)
+  - Realm/Headers (10.15.1)
+  - RealmSwift (10.15.1):
+    - Realm (= 10.15.1)
+  - RxCocoa (6.1.0):
+    - RxRelay (= 6.1.0)
+    - RxSwift (= 6.1.0)
+  - RxRelay (6.1.0):
+    - RxSwift (= 6.1.0)
+  - RxSwift (6.1.0)
+  - "UITextView+Placeholder (1.4.0)"
+
+DEPENDENCIES:
+  - Action (= 5.0.0)
+  - Charts
+  - FSCalendar
+  - IQKeyboardManager
+  - R.swift (= 5.4.0)
+  - RealmSwift (= 10.15.1)
+  - RxCocoa (= 6.1.0)
+  - RxSwift (= 6.1.0)
+  - "UITextView+Placeholder"
+
+SPEC REPOS:
+  trunk:
+    - Action
+    - Charts
+    - FSCalendar
+    - IQKeyboardManager
+    - R.swift
+    - R.swift.Library
+    - Realm
+    - RealmSwift
+    - RxCocoa
+    - RxRelay
+    - RxSwift
+    - "UITextView+Placeholder"
+
+SPEC CHECKSUMS:
+  Action: 47f1825511907b4fcd79dd7a7db9526c20f78018
+  Charts: b1e3a1f5a1c9ba5394438ca3b91bd8c9076310af
+  FSCalendar: e6a2eb9c571bf0719ed797ef807e08426753c241
+  IQKeyboardManager: 241cc94ccabc9deb8f8bd7d12f00d73288d13ecc
+  R.swift: c533450b0f7dc494e0993f5f1a1db925d84c3006
+  R.swift.Library: 0fc583cb55a99e28901299cc451614cad1161962
+  Realm: fbcbde2620d51623cc5b18e28f5b165c39abef52
+  RealmSwift: e4bea8e42efad3d543aea23b56504069c6faaea2
+  RxCocoa: 5c51f02d562cbd94629f6c26cf0c80fe4ab8d343
+  RxRelay: 483e1a19fad961b41f0b0c0bee506f46c1ae14fe
+  RxSwift: a834e5c538e89eca0cae86f403f4fbf0336786ce
+  "UITextView+Placeholder": d7b0c400921f66523f3a85d74f774512e14f6502
+
+PODFILE CHECKSUM: 2a4e77d15731a5d6ed8bdf58a4322e7e6c2b6323
+
+COCOAPODS: 1.11.2
