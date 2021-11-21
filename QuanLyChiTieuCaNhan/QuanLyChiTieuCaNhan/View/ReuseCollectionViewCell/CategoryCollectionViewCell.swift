@@ -9,7 +9,6 @@ import UIKit
 
 class CategoryCollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet weak var icon: UIImageView!
     @IBOutlet weak var title: UILabel!
     override var isSelected: Bool{
         didSet{
@@ -25,7 +24,6 @@ class CategoryCollectionViewCell: UICollectionViewCell {
         self.backgroundColor = .gray.withAlphaComponent(0.4)
     }
     func setData(category: CategoryModel) {
-//        icon.image = UIImage(named: category.icon)
         title.text = category.title
     }
 }

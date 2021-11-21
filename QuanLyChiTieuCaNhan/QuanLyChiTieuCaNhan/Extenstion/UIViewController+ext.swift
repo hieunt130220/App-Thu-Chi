@@ -19,8 +19,8 @@ extension UIViewController {
     }
     func showConfirm(message: String, callback: @escaping (()->())) {
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Huỷ", style: .destructive, handler: nil))
-        alert.addAction(UIAlertAction(title: "Đồng ý", style: .cancel, handler: {_ in
+        alert.addAction(UIAlertAction(title: "Huỷ", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Đồng ý", style: .destructive, handler: {_ in
             callback()
         }))
         self.present(alert, animated: true, completion: nil)

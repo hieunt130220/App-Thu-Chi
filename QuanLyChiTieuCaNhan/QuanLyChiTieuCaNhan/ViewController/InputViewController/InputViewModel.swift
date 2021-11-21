@@ -35,10 +35,14 @@ class InputViewModel: BaseViewModel,BaseViewModelProtocol {
             .subscribe(onNext: {index in
                 if index == ItemType.income.rawValue {
                     currentTab.onNext(.income)
-                    categories.onNext(CategoryModel.dummyData(type: .income))
+                    var tmp = realmManager.getCategory(type: .income)
+                    tmp.append(CategoryModel(type: .income, title: "Chỉnh sửa"))
+                    categories.onNext(tmp)
                 } else {
                     currentTab.onNext(.spend)
-                    categories.onNext(CategoryModel.dummyData(type: .spend))
+                    var tmp = realmManager.getCategory(type: .spend)
+                    tmp.append(CategoryModel(type: .spend, title: "Chỉnh sửa"))
+                    categories.onNext(tmp)
                 }
             }).disposed(by: disposeBag)
         let observe = Observable.combineLatest(input.date, input.type, input.amount, input.category, input.note)

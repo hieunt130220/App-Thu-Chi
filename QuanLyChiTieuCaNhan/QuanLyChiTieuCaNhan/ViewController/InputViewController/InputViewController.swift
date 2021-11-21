@@ -96,7 +96,11 @@ class InputViewController: BaseViewController, BaseViewControllerProtocol {
     func setupRx() {
         categoryCollectionView.rx.modelSelected(CategoryModel.self)
             .subscribe(onNext: {[weak self] category in
-                self?.categorySelected.accept(category.title)
+                if category.title == "Chỉnh sửa" {
+                    self?.categorySelected.accept("")
+                } else {
+                    self?.categorySelected.accept(category.title)
+                }
             }).disposed(by: disposeBag)
     }
     func setupViews() {

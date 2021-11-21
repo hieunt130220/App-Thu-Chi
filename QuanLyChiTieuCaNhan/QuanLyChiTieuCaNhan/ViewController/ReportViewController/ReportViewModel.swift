@@ -11,6 +11,9 @@ import RxCocoa
 import CloudKit
 import Action
 class ReportViewModel: BaseViewModel, BaseViewModelProtocol {
+    lazy var observe = {
+        return DBObserver()
+    }()
     struct Input {
         let dateTrigger: Observable<Date>
         let typeTrigger: Observable<Int>
@@ -30,8 +33,11 @@ class ReportViewModel: BaseViewModel, BaseViewModelProtocol {
         let total = PublishSubject<Int>()
         let dataChart = PublishSubject<[[String:Any]]>()
         let realmManager = RealmDataManager.shared
-        
+        var typeSelected = ItemType.spend
+        var periodSelected = 0
         let getAllDataAction: Action<(Date,ItemType,Int),[[String:Any]]> = Action {time,type, period in
+            typeSelected = type
+            periodSelected = period
             if period == 0 {
                 return Observable.just(realmManager.getListItemByPeriod(time: time, type: type, period: .month))
             } else {
@@ -78,6 +84,15 @@ class ReportViewModel: BaseViewModel, BaseViewModelProtocol {
                 }
                 dataChart.onNext(tmp)
             }).disposed(by: disposeBag)
+        
+        observe.didUpdateDB.subscribe(onNext: {date in
+            getAllDataAction.execute((date, typeSelected, periodSelected))
+            getTotalAction.execute((date, periodSelected))
+        }).disposed(by: disposeBag)
+        observe.didAddNewItem.subscribe(onNext: {date in
+            getAllDataAction.execute((date, typeSelected, periodSelected))
+            getTotalAction.execute((date, periodSelected))
+        }).disposed(by: disposeBag)
         return Output(allData: allData.asDriver(onErrorJustReturn: []),
                       totalSpend: totalSpend.asDriver(onErrorJustReturn: 0),
                       totalIncome: totalIncome.asDriver(onErrorJustReturn: 0),

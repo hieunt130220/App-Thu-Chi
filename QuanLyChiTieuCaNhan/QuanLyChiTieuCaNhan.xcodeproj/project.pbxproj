@@ -48,6 +48,7 @@
 		24CCF9A4274A2CBC00FD06BB /* DetailReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CCF9A2274A2CBC00FD06BB /* DetailReportViewController.swift */; };
 		24CCF9A5274A2CBC00FD06BB /* DetailReportViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24CCF9A3274A2CBC00FD06BB /* DetailReportViewController.xib */; };
 		24CCF9A7274A2CD300FD06BB /* DetailReportViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CCF9A6274A2CD300FD06BB /* DetailReportViewModel.swift */; };
+		24CCF9AB274A3E7400FD06BB /* XYMarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CCF9AA274A3E7400FD06BB /* XYMarkerView.swift */; };
 		24D52481273D6EEA008F7C26 /* CategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D52480273D6EEA008F7C26 /* CategoryModel.swift */; };
 		24D52483273D72D7008F7C26 /* UIView+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D52482273D72D7008F7C26 /* UIView+ext.swift */; };
 		24D52485273D73DE008F7C26 /* UITextfield+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D52484273D73DE008F7C26 /* UITextfield+ext.swift */; };
@@ -102,6 +103,7 @@
 		24CCF9A2274A2CBC00FD06BB /* DetailReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailReportViewController.swift; sourceTree = "<group>"; };
 		24CCF9A3274A2CBC00FD06BB /* DetailReportViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailReportViewController.xib; sourceTree = "<group>"; };
 		24CCF9A6274A2CD300FD06BB /* DetailReportViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailReportViewModel.swift; sourceTree = "<group>"; };
+		24CCF9AA274A3E7400FD06BB /* XYMarkerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYMarkerView.swift; sourceTree = "<group>"; };
 		24D52480273D6EEA008F7C26 /* CategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryModel.swift; sourceTree = "<group>"; };
 		24D52482273D72D7008F7C26 /* UIView+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+ext.swift"; sourceTree = "<group>"; };
 		24D52484273D73DE008F7C26 /* UITextfield+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextfield+ext.swift"; sourceTree = "<group>"; };
@@ -256,6 +258,7 @@
 		24A5FCC0273D569900F7C4A2 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				24CCF9A9274A3E6000FD06BB /* Charts */,
 				2406D22B274954C0002E57FD /* UITextField */,
 				24B21B3827494E9A00CE70EB /* UITextView */,
 				244C0676273EB3E00063F3BD /* UIButton */,
@@ -358,6 +361,14 @@
 			path = DetailReportVIewController;
 			sourceTree = "<group>";
 		};
+		24CCF9A9274A3E6000FD06BB /* Charts */ = {
+			isa = PBXGroup;
+			children = (
+				24CCF9AA274A3E7400FD06BB /* XYMarkerView.swift */,
+			);
+			path = Charts;
+			sourceTree = "<group>";
+		};
 		47430CAD91C648D0602BD52E /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -394,6 +405,8 @@
 			dependencies = (
 			);
 			name = QuanLyChiTieuCaNhan;
+			packageProductDependencies = (
+			);
 			productName = QuanLyChiTieuCaNhan;
 			productReference = 24A5FCA6273D563E00F7C4A2 /* QuanLyChiTieuCaNhan.app */;
 			productType = "com.apple.product-type.application";
@@ -423,6 +436,8 @@
 				Base,
 			);
 			mainGroup = 24A5FC9D273D563E00F7C4A2;
+			packageReferences = (
+			);
 			productRefGroup = 24A5FCA7273D563E00F7C4A2 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -543,6 +558,7 @@
 				2406D22D274954D5002E57FD /* BaseTextField.swift in Sources */,
 				24A5FCC8273D5A4400F7C4A2 /* BaseViewModelProtocol.swift in Sources */,
 				2491DAF6273E76F900042A5D /* UIViewController+ext.swift in Sources */,
+				24CCF9AB274A3E7400FD06BB /* XYMarkerView.swift in Sources */,
 				24A5FCD8273D5B9000F7C4A2 /* ReportViewController.swift in Sources */,
 				24032E8C2746AE21008DC1C2 /* Enum.swift in Sources */,
 				24A5FCE1273D5CD400F7C4A2 /* Const.swift in Sources */,

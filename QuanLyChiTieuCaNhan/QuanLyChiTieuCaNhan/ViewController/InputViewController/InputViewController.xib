@@ -245,7 +245,7 @@
                 <constraint firstItem="f00-bL-JEi" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="vqp-4A-cSy"/>
                 <constraint firstItem="cPb-81-Rpe" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="wJ4-kj-wU1"/>
             </constraints>
-            <point key="canvasLocation" x="287" y="158"/>
+            <point key="canvasLocation" x="-178" y="117"/>
         </view>
     </objects>
     <resources>

@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import Charts
+import RxRelay
 class ReportViewController: BaseViewController, BaseViewControllerProtocol {
     
     @IBOutlet weak var heightTableView: NSLayoutConstraint!
@@ -20,7 +21,7 @@ class ReportViewController: BaseViewController, BaseViewControllerProtocol {
     @IBOutlet weak var totalLabel: UILabel!
     @IBOutlet weak var chartView: PieChartView!
     var viewModel: ReportViewModel!
-    let timeObserve = PublishSubject<Date>()
+    let timeObserve = BehaviorRelay<Date>(value: Date())
     let monthPicker = NTMonthYearPicker()
     required init(viewModel: ReportViewModel) {
         super.init(nibName: nil, bundle: nil)
@@ -37,14 +38,13 @@ class ReportViewController: BaseViewController, BaseViewControllerProtocol {
         bindingViewModels()
         setupRx()
         setupViews()
+        self.tableView.addObserver(self, forKeyPath: "contentSize", options: .new, context: nil)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.tableView.addObserver(self, forKeyPath: "contentSize", options: .new, context: nil)
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.tableView.removeObserver(self, forKeyPath: "contentSize")
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -63,7 +63,7 @@ class ReportViewController: BaseViewController, BaseViewControllerProtocol {
         }
     }
     func bindingViewModels() {
-        let input = ReportViewModel.Input(dateTrigger: timeObserve,
+        let input = ReportViewModel.Input(dateTrigger: timeObserve.asObservable(),
                                           typeTrigger: typeSegment.rx.selectedSegmentIndex.startWith(0).asObservable(),
                                           periodTrigger: timeSegment.rx.selectedSegmentIndex.startWith(0).asObservable())
         let output = viewModel.transfrom(from: input)
@@ -88,12 +88,12 @@ class ReportViewController: BaseViewController, BaseViewControllerProtocol {
         }.disposed(by: disposeBag)
     }
     func setupRx() {
-        timeObserve.onNext(Date())
+        timeObserve.accept(Date())
         
         timeTextField.rx.controlEvent(.editingDidEnd)
             .subscribe(onNext: {[weak self] in
                 guard let weakself = self else { return }
-                weakself.timeObserve.onNext(weakself.monthPicker.date)
+                weakself.timeObserve.accept(weakself.monthPicker.date)
                 weakself.timeTextField.text = weakself.monthPicker.date.stringWith(format: weakself.timeSegment.selectedSegmentIndex == 0 ? "MM/yyyy" : "yyyy")
             }).disposed(by: disposeBag)
         
@@ -103,6 +103,11 @@ class ReportViewController: BaseViewController, BaseViewControllerProtocol {
                 weakself.timeTextField.text = weakself.monthPicker.date.stringWith(format: index == 0 ? "MM/yyyy" : "yyyy")
                 self?.monthPicker.datePickerMode = NTMonthYearPickerMode(UInt32(index))
             }).disposed(by: disposeBag)
+        
+        tableView.rx.modelSelected([String:Any].self).subscribe(onNext: {[weak self]item in
+            let vc = DetailReportViewController(viewModel: .init(category: item.keys.first!, time: self!.timeObserve.value))
+            self?.navigationController?.pushViewController(vc, animated: true)
+        }).disposed(by: disposeBag)
     }
     func setupViews() {
         monthPicker.datePickerMode = NTMonthYearPickerMode(0)
@@ -118,7 +123,7 @@ class ReportViewController: BaseViewController, BaseViewControllerProtocol {
     func setDataCount(dataValue: [[String:Any]]) {
         let entries = (0..<dataValue.count).map { (i) -> PieChartDataEntry in
             return PieChartDataEntry(value: Double(dataValue[i].values.first as! CGFloat),
-                                     label:  dataValue[i].keys.first!)
+                                     label: dataValue[i].keys.first!)
         }
         
         let set = PieChartDataSet(entries: entries, label: "")
@@ -127,23 +132,19 @@ class ReportViewController: BaseViewController, BaseViewControllerProtocol {
         set.entryLabelColor = NSUIColor.black
         set.colors = ChartColorTemplates.vordiplom()
         + ChartColorTemplates.joyful()
-
         let data = PieChartData(dataSet: set)
-        
         let pFormatter = NumberFormatter()
         pFormatter.numberStyle = .percent
         pFormatter.maximumFractionDigits = 2
-        pFormatter.minimumFractionDigits = 2
         pFormatter.multiplier = 100
         pFormatter.percentSymbol = " %"
-        data.setValueFormatter(DefaultValueFormatter(formatter: pFormatter))
-        
+        data.setValueFormatter(ChartValueFormatter(numberFormatter: pFormatter))
         data.setValueFont(.systemFont(ofSize: 11, weight: .light))
         data.setValueTextColor(.black)
         chartView.drawEntryLabelsEnabled = false
         chartView.data = data
         chartView.highlightValues(nil)
         chartView.animate(xAxisDuration: 1.0)
-                
     }
 }
+
