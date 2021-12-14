@@ -180,7 +180,7 @@ public class DayAxisValueFormatter: NSObject, IAxisValueFormatter {
         self.chart = chart
     }
     public func stringForValue(_ value: Double, axis: AxisBase?) -> String {
-        return "T\(Int(value+1))"
+        return "T\(Int(value))"
     }
 }
 public class ChartValueFormatter: NSObject, IValueFormatter {

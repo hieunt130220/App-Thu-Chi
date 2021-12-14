@@ -7,11 +7,13 @@
 
 import RxSwift
 import RxCocoa
+import Action
 class InputViewModel: BaseViewModel,BaseViewModelProtocol {
     lazy var observe = {
         return DBObserver()
     }()
     struct Input {
+        let onAppear: Observable<Void>
         let type: Observable<Int>
         let date: Observable<Date>
         let note: Observable<String>
@@ -29,22 +31,23 @@ class InputViewModel: BaseViewModel,BaseViewModelProtocol {
         let categories = BehaviorSubject<[CategoryModel]>(value: [])
         let addSuccess = PublishSubject<Bool>()
         let realmManager = RealmDataManager.shared
-        let currentTab = PublishSubject<ItemType>()
+        let currentTab = BehaviorRelay<ItemType>(value: .spend)
         
-        input.type
-            .subscribe(onNext: {index in
-                if index == ItemType.income.rawValue {
-                    currentTab.onNext(.income)
-                    var tmp = realmManager.getCategory(type: .income)
-                    tmp.append(CategoryModel(type: .income, title: "Chỉnh sửa"))
-                    categories.onNext(tmp)
-                } else {
-                    currentTab.onNext(.spend)
-                    var tmp = realmManager.getCategory(type: .spend)
-                    tmp.append(CategoryModel(type: .spend, title: "Chỉnh sửa"))
-                    categories.onNext(tmp)
-                }
-            }).disposed(by: disposeBag)
+        let getCategoryAction: Action<Int,([CategoryModel], ItemType)> = Action {type in
+            return Observable.just((realmManager.getCategory(type: ItemType(rawValue: type)!),ItemType(rawValue: type)!))
+        }
+        input.onAppear.take(1).withLatestFrom(Observable.just(0)).bind(to: getCategoryAction.inputs).disposed(by: disposeBag)
+        input.type.bind(to: getCategoryAction.inputs).disposed(by: disposeBag)
+        
+        getCategoryAction.elements.subscribe(onNext: {all, type in
+            currentTab.accept(type)
+            categories.onNext(all + [(CategoryModel(type: type, title: "Chỉnh sửa"))])
+        }).disposed(by: disposeBag)
+        
+        self.observe.didUpdateCategory.subscribe(onNext: {_ in
+            getCategoryAction.execute(currentTab.value.rawValue)
+        }).disposed(by: disposeBag)
+        
         let observe = Observable.combineLatest(input.date, input.type, input.amount, input.category, input.note)
         input.doneTrigger
             .withLatestFrom(observe)

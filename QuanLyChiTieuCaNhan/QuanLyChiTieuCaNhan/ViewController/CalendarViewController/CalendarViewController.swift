@@ -71,10 +71,14 @@ class CalendarViewController: BaseViewController, BaseViewControllerProtocol {
 extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource {
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         dateSelected.onNext(date)
-        if date.localDate().month != preDate.localDate().month {
+        switch monthPosition {
+        case .previous, .next:
             self.calendar.select(date, scrollToDate: true)
+        case .current:
+            break
+        case .notFound:
+            break
         }
-        preDate = date.localDate()
     }
 }
 

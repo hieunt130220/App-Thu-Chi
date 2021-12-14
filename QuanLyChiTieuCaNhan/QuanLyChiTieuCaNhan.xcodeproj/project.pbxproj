@@ -49,6 +49,9 @@
 		24CCF9A5274A2CBC00FD06BB /* DetailReportViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24CCF9A3274A2CBC00FD06BB /* DetailReportViewController.xib */; };
 		24CCF9A7274A2CD300FD06BB /* DetailReportViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CCF9A6274A2CD300FD06BB /* DetailReportViewModel.swift */; };
 		24CCF9AB274A3E7400FD06BB /* XYMarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CCF9AA274A3E7400FD06BB /* XYMarkerView.swift */; };
+		24CCF9B2274A9DB300FD06BB /* EditCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CCF9B0274A9DB300FD06BB /* EditCategoryViewController.swift */; };
+		24CCF9B3274A9DB300FD06BB /* EditCategoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24CCF9B1274A9DB300FD06BB /* EditCategoryViewController.xib */; };
+		24CCF9B5274A9DCA00FD06BB /* EditCategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CCF9B4274A9DCA00FD06BB /* EditCategoryViewModel.swift */; };
 		24D52481273D6EEA008F7C26 /* CategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D52480273D6EEA008F7C26 /* CategoryModel.swift */; };
 		24D52483273D72D7008F7C26 /* UIView+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D52482273D72D7008F7C26 /* UIView+ext.swift */; };
 		24D52485273D73DE008F7C26 /* UITextfield+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D52484273D73DE008F7C26 /* UITextfield+ext.swift */; };
@@ -104,6 +107,9 @@
 		24CCF9A3274A2CBC00FD06BB /* DetailReportViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailReportViewController.xib; sourceTree = "<group>"; };
 		24CCF9A6274A2CD300FD06BB /* DetailReportViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailReportViewModel.swift; sourceTree = "<group>"; };
 		24CCF9AA274A3E7400FD06BB /* XYMarkerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYMarkerView.swift; sourceTree = "<group>"; };
+		24CCF9B0274A9DB300FD06BB /* EditCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCategoryViewController.swift; sourceTree = "<group>"; };
+		24CCF9B1274A9DB300FD06BB /* EditCategoryViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditCategoryViewController.xib; sourceTree = "<group>"; };
+		24CCF9B4274A9DCA00FD06BB /* EditCategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCategoryViewModel.swift; sourceTree = "<group>"; };
 		24D52480273D6EEA008F7C26 /* CategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryModel.swift; sourceTree = "<group>"; };
 		24D52482273D72D7008F7C26 /* UIView+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+ext.swift"; sourceTree = "<group>"; };
 		24D52484273D73DE008F7C26 /* UITextfield+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextfield+ext.swift"; sourceTree = "<group>"; };
@@ -125,14 +131,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		24032E8A2746AB3B008DC1C2 /* DetailViewController */ = {
+		24032E8A2746AB3B008DC1C2 /* EditViewController */ = {
 			isa = PBXGroup;
 			children = (
 				24B21B32274938E300CE70EB /* EditViewController.swift */,
 				24B21B33274938E300CE70EB /* EditViewController.xib */,
 				24B21B36274938F200CE70EB /* EditViewModel.swift */,
 			);
-			path = DetailViewController;
+			path = EditViewController;
 			sourceTree = "<group>";
 		};
 		2406D22B274954C0002E57FD /* UITextField */ = {
@@ -223,8 +229,9 @@
 		24A5FCBD273D567700F7C4A2 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				24CCF9AF274A9D8E00FD06BB /* EditCategoryViewController */,
 				24CCF9A1274A2C5B00FD06BB /* DetailReportVIewController */,
-				24032E8A2746AB3B008DC1C2 /* DetailViewController */,
+				24032E8A2746AB3B008DC1C2 /* EditViewController */,
 				24A5FCDA273D5BD200F7C4A2 /* TabbarViewController */,
 				24A5FCD5273D5B7300F7C4A2 /* ReportViewController */,
 				24A5FCD0273D5B5800F7C4A2 /* CalendarViewController */,
@@ -369,6 +376,16 @@
 			path = Charts;
 			sourceTree = "<group>";
 		};
+		24CCF9AF274A9D8E00FD06BB /* EditCategoryViewController */ = {
+			isa = PBXGroup;
+			children = (
+				24CCF9B0274A9DB300FD06BB /* EditCategoryViewController.swift */,
+				24CCF9B1274A9DB300FD06BB /* EditCategoryViewController.xib */,
+				24CCF9B4274A9DCA00FD06BB /* EditCategoryViewModel.swift */,
+			);
+			path = EditCategoryViewController;
+			sourceTree = "<group>";
+		};
 		47430CAD91C648D0602BD52E /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -459,6 +476,7 @@
 				24B21B35274938E300CE70EB /* EditViewController.xib in Resources */,
 				24A5FCE8273D6B4000F7C4A2 /* CategoryCollectionViewCell.xib in Resources */,
 				24A5FCB1273D563E00F7C4A2 /* Main.storyboard in Resources */,
+				24CCF9B3274A9DB300FD06BB /* EditCategoryViewController.xib in Resources */,
 				24A5FCCF273D5B4F00F7C4A2 /* InputViewController.xib in Resources */,
 				244C0675273EB2190063F3BD /* HistoryTableViewCell.xib in Resources */,
 				24CCF9A5274A2CBC00FD06BB /* DetailReportViewController.xib in Resources */,
@@ -536,6 +554,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				244C0671273EAF390063F3BD /* CalendarViewModel.swift in Sources */,
+				24CCF9B2274A9DB300FD06BB /* EditCategoryViewController.swift in Sources */,
 				24D52483273D72D7008F7C26 /* UIView+ext.swift in Sources */,
 				24CCF9A7274A2CD300FD06BB /* DetailReportViewModel.swift in Sources */,
 				24A5FCC6273D5A1200F7C4A2 /* BaseViewController.swift in Sources */,
@@ -560,6 +579,7 @@
 				2491DAF6273E76F900042A5D /* UIViewController+ext.swift in Sources */,
 				24CCF9AB274A3E7400FD06BB /* XYMarkerView.swift in Sources */,
 				24A5FCD8273D5B9000F7C4A2 /* ReportViewController.swift in Sources */,
+				24CCF9B5274A9DCA00FD06BB /* EditCategoryViewModel.swift in Sources */,
 				24032E8C2746AE21008DC1C2 /* Enum.swift in Sources */,
 				24A5FCE1273D5CD400F7C4A2 /* Const.swift in Sources */,
 				2406D23027495951002E57FD /* DBObserver.swift in Sources */,
@@ -723,7 +743,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = U2A9YQKK85;
+				DEVELOPMENT_TEAM = T3ZVQ5JVC4;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = QuanLyChiTieuCaNhan/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = HIEUNT;
@@ -761,7 +781,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = U2A9YQKK85;
+				DEVELOPMENT_TEAM = T3ZVQ5JVC4;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = QuanLyChiTieuCaNhan/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = HIEUNT;

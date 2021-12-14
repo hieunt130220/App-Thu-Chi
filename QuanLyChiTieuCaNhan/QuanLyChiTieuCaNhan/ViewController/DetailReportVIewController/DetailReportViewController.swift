@@ -17,7 +17,7 @@ class DetailReportViewController: BaseViewController, BaseViewControllerProtocol
     @IBOutlet weak var tableView: UITableView!
     
     var viewModel: DetailReportViewModel!
-    let arrayTotal = BehaviorRelay<[Int]>(value: [])
+    let monthSelected = PublishSubject<Int>()
     required init(viewModel: DetailReportViewModel) {
         super.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
@@ -34,15 +34,28 @@ class DetailReportViewController: BaseViewController, BaseViewControllerProtocol
         setupViews()
         // Do any additional setup after loading the view.
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tabBarController?.tabBar.isHidden = true
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.tabBarController?.tabBar.isHidden = false
+    }
     func bindingViewModels() {
-        let input = DetailReportViewModel.Input(onApear: self.rx.viewWillAppear.asObservable())
+        let input = DetailReportViewModel.Input(onApear: self.rx.viewWillAppear.asObservable(),
+                                                monthSelected: monthSelected)
         
         let output = viewModel.transfrom(from: input)
         
         output.totalArray.drive{[weak self] array in
-            self?.arrayTotal.accept(array)
             self?.setDataCount(data: array)
         }.disposed(by: disposeBag)
+        
+        output.itemArray.drive(
+            tableView.rx.items(cellIdentifier: HistoryTableViewCell.className, cellType: HistoryTableViewCell.self)) {row, item, cell in
+                cell.setDetailReport(item: item)
+            }.disposed(by: disposeBag)
     }
     func setupRx() {
         backButton.rx.tap.bind{[weak self] in
@@ -51,7 +64,13 @@ class DetailReportViewController: BaseViewController, BaseViewControllerProtocol
     }
     func setupViews() {
         self.titleLabel.text = self.viewModel.category
-        self.setup(barLineChartView: barChartView)
+        tableView.register(UINib(nibName: HistoryTableViewCell.className, bundle: nil), forCellReuseIdentifier: HistoryTableViewCell.className)
+        tableView.rowHeight = 60
+        self.setupchart()
+    }
+    func setupchart() {
+        barChartView.chartDescription?.enabled = false
+        barChartView.rightAxis.enabled = false
         
         barChartView.delegate = self
         
@@ -88,16 +107,9 @@ class DetailReportViewController: BaseViewController, BaseViewControllerProtocol
         marker.minimumSize = CGSize(width: 80, height: 40)
         barChartView.marker = marker
     }
-    func setup(barLineChartView chartView: BarLineChartViewBase) {
-        chartView.chartDescription?.enabled = false
-        let xAxis = chartView.xAxis
-        xAxis.labelPosition = .bothSided
-        chartView.rightAxis.enabled = false
-        
-    }
     func setDataCount(data: [Int]) {
         let yVals = (1...data.count).map { (i) -> BarChartDataEntry in
-            return BarChartDataEntry(x: Double(i-1), y: Double(data[i-1]))
+            return BarChartDataEntry(x: Double(i), y: Double(data[i-1]))
         }
         let set1 = BarChartDataSet(entries: yVals, label: "")
         set1.drawValuesEnabled = false
@@ -108,11 +120,12 @@ class DetailReportViewController: BaseViewController, BaseViewControllerProtocol
         barChartView.data = data
         barChartView.animate(yAxisDuration: 1)
         let curentMonth = self.viewModel.time.month
-        barChartView.highlightValue(x: Double(curentMonth - 1), dataSetIndex: 0)
+        barChartView.highlightValue(x: Double(curentMonth), dataSetIndex: 0)
     }
 }
 extension DetailReportViewController: ChartViewDelegate {
     public func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
-        print(entry)
+        monthSelected.onNext(Int(entry.x))
     }
+    
 }

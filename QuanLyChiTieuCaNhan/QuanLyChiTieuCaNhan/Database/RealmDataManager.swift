@@ -29,7 +29,7 @@ class RealmDataManager: NSObject {
     
     //MARK: common functions
     @discardableResult
-    func addObject(object: Object) ->Object{
+    func addObject(object: Object) -> Object{
         try! realm.write {
             realm.add(object)
         }
@@ -141,6 +141,12 @@ extension RealmDataManager {
             totalArray.append(total)
         }
         return totalArray
+    }
+    func getItemByCategory(category: String, time: Date) -> [ItemModel] {
+        let monthString = time.stringWith(format: "MM/yyyy")
+        return realm.objects(ItemModel.self)
+            .filter("category = %@ AND date CONTAINS[c] %@", category, monthString)
+            .compactMap{$0}
     }
     func sum(items:[ItemModel]) -> Int {
         var sum: Int = 0

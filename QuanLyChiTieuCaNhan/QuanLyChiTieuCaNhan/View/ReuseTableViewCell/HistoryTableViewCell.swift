@@ -34,4 +34,8 @@ class HistoryTableViewCell: UITableViewCell {
         titleLabel.text = item.keys.first
         amountLabel.text = (item.values.first as! Int).formatCurrency()
     }
+    func setDetailReport(item: ItemModel) {
+        titleLabel.text = item.date
+        amountLabel.text = item.amount.formatCurrency()
+    }
 }

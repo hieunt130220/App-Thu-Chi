@@ -44,7 +44,8 @@ class InputViewController: BaseViewController, BaseViewControllerProtocol {
         fatalError("")
     }
     func bindingViewModels() {
-        let input = InputViewModel.Input(type: tabSegment.rx.selectedSegmentIndex.startWith(0).asObservable(),
+        let input = InputViewModel.Input(onAppear: rx.viewWillAppear.asObservable(),
+                                         type: tabSegment.rx.selectedSegmentIndex.asObservable(),
                                          date: dateSelected.asObservable(),
                                          note: noteTextView.rx.text.orEmpty.asObservable(),
                                          category: categorySelected.asObservable(),
@@ -97,7 +98,8 @@ class InputViewController: BaseViewController, BaseViewControllerProtocol {
         categoryCollectionView.rx.modelSelected(CategoryModel.self)
             .subscribe(onNext: {[weak self] category in
                 if category.title == "Chỉnh sửa" {
-                    self?.categorySelected.accept("")
+                    let vc = EditCategoryViewController(viewModel: .init(type: ItemType(rawValue: (self?.tabSegment.selectedSegmentIndex)!)!))
+                    self?.navigationController?.pushViewController(vc, animated: true)
                 } else {
                     self?.categorySelected.accept(category.title)
                 }
