@@ -13,7 +13,7 @@ class InputViewController: BaseViewController, BaseViewControllerProtocol {
     @IBOutlet weak var heightOfCollectionView: NSLayoutConstraint!
     @IBOutlet weak var tabSegment: UISegmentedControl!
     @IBOutlet weak var dateTextField: UITextField!
-    @IBOutlet weak var noteTextView: BaseTextView!
+    @IBOutlet weak var noteTextView: UITextView!
     @IBOutlet weak var moneyTextField: BaseTextField!
     @IBOutlet weak var categoryCollectionView: UICollectionView!
     @IBOutlet weak var doneButton: UIButton!
@@ -29,12 +29,13 @@ class InputViewController: BaseViewController, BaseViewControllerProtocol {
         bindingViewModels()
         setupRx()
         setupViews()
+        configLayoutCollectionView()
+
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        configLayoutCollectionView()
-        let height = categoryCollectionView.collectionViewLayout.collectionViewContentSize.height
-        heightOfCollectionView.constant = height
+//        let height = categoryCollectionView.collectionViewLayout.collectionViewContentSize.height
+//        heightOfCollectionView.constant = height
     }
     required init(viewModel: InputViewModel) {
         super.init(nibName: nil, bundle: nil)
@@ -57,7 +58,7 @@ class InputViewController: BaseViewController, BaseViewControllerProtocol {
         output.categories.drive(categoryCollectionView.rx.items(cellIdentifier: CategoryCollectionViewCell.className, cellType: CategoryCollectionViewCell.self)) { row, item, cell in
             cell.setData(category: item)
         }.disposed(by: disposeBag)
-        
+
         output.addSuccess.drive{[weak self] isSuccess in
             if isSuccess {
                 self?.showAlert(message: "Thêm thành công", callback: {
@@ -87,11 +88,11 @@ class InputViewController: BaseViewController, BaseViewControllerProtocol {
     }
     func configLayoutCollectionView() {
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: (categoryCollectionView.frame.width - 10) / 3, height: 80)
+        layout.itemSize = CGSize(width: (SCREEN_WIDTH - 50) / 3, height: 80)
         layout.minimumLineSpacing = 5
         layout.minimumInteritemSpacing = 5
         layout.scrollDirection = .vertical
-        layout.sectionInset = .zero
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 100, right: 0)
         categoryCollectionView.collectionViewLayout = layout
     }
     func setupRx() {

@@ -762,7 +762,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.hieunt.QuanLyChiTieuCaNhan;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hieunt.QuanLyChiTieu;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "QuanLyChiTieuCaNhan/QuanLyChiTieuCaNhan-Bridging-Header.h";
@@ -800,7 +800,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.hieunt.QuanLyChiTieuCaNhan;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hieunt.QuanLyChiTieu;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "QuanLyChiTieuCaNhan/QuanLyChiTieuCaNhan-Bridging-Header.h";
