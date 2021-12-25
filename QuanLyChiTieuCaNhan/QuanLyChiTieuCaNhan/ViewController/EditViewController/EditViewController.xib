@@ -54,7 +54,7 @@
                     </subviews>
                 </stackView>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="b0L-jU-iWb">
-                    <rect key="frame" x="0.0" y="98" width="414" height="205.5"/>
+                    <rect key="frame" x="0.0" y="98" width="414" height="320"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LS1-cK-btP">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
@@ -101,17 +101,20 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="veA-14-wYN">
-                            <rect key="frame" x="0.0" y="50" width="414" height="55.5"/>
+                            <rect key="frame" x="0.0" y="50" width="414" height="170"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ghi chú" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h3e-CY-AwK">
-                                    <rect key="frame" x="20" y="17" width="63" height="21.5"/>
+                                    <rect key="frame" x="20" y="24.5" width="63" height="21.5"/>
                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                                     <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" textAlignment="justified" translatesAutoresizingMaskIntoConstraints="NO" id="xOX-PI-Q66" customClass="BaseTextView" customModule="QuanLyChiTieuCaNhan" customModuleProvider="target">
-                                    <rect key="frame" x="103" y="10" width="301" height="35.5"/>
+                                    <rect key="frame" x="103" y="10" width="301" height="150"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="150" id="Pxp-XO-okx"/>
+                                    </constraints>
                                     <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" enablesReturnKeyAutomatically="YES" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
@@ -126,7 +129,7 @@
                                     </userDefinedRuntimeAttributes>
                                 </textView>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h9X-JG-iws">
-                                    <rect key="frame" x="10" y="54.5" width="394" height="1"/>
+                                    <rect key="frame" x="10" y="169" width="394" height="1"/>
                                     <color key="backgroundColor" systemColor="systemGrayColor"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="1" id="2iQ-Cv-7YQ"/>
@@ -143,12 +146,12 @@
                                 <constraint firstAttribute="bottom" secondItem="xOX-PI-Q66" secondAttribute="bottom" constant="10" id="fQz-kG-auV"/>
                                 <constraint firstItem="h3e-CY-AwK" firstAttribute="leading" secondItem="veA-14-wYN" secondAttribute="leading" constant="20" id="sJv-GM-Y8Z"/>
                                 <constraint firstAttribute="bottom" secondItem="h9X-JG-iws" secondAttribute="bottom" id="uOm-eL-zTp"/>
-                                <constraint firstItem="h3e-CY-AwK" firstAttribute="centerY" secondItem="veA-14-wYN" secondAttribute="centerY" id="vHh-5h-gM8"/>
+                                <constraint firstItem="h3e-CY-AwK" firstAttribute="centerY" secondItem="veA-14-wYN" secondAttribute="centerY" constant="-50" id="vHh-5h-gM8"/>
                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="zBX-D5-H9w"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZiD-YV-5WA">
-                            <rect key="frame" x="0.0" y="105.5" width="414" height="50"/>
+                            <rect key="frame" x="0.0" y="220" width="414" height="50"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tiền thu" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rRA-fx-P46">
                                     <rect key="frame" x="20" y="14.5" width="67" height="21.5"/>
@@ -192,7 +195,7 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YBf-g6-Gca">
-                            <rect key="frame" x="0.0" y="155.5" width="414" height="50"/>
+                            <rect key="frame" x="0.0" y="270" width="414" height="50"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Danh mục" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0u5-9a-PQS">
                                     <rect key="frame" x="20" y="14.5" width="84.5" height="21.5"/>
@@ -260,7 +263,7 @@
                 <constraint firstItem="6LA-On-N1w" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="oQd-xJ-xcv"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Txy-Ye-hym" secondAttribute="trailing" constant="20" id="yOT-ZW-CvO"/>
             </constraints>
-            <point key="canvasLocation" x="387" y="43"/>
+            <point key="canvasLocation" x="241" y="-62"/>
         </view>
     </objects>
     <resources>

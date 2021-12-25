@@ -25,9 +25,9 @@ class CalendarViewController: BaseViewController, BaseViewControllerProtocol {
         setupRx()
         setupViews()
     }
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.tabBarController?.tabBar.isHidden = false
     }
     required init(viewModel: CalendarViewModel) {
         super.init(nibName: nil, bundle: nil)
@@ -63,7 +63,7 @@ class CalendarViewController: BaseViewController, BaseViewControllerProtocol {
         tableView.rx.modelSelected(ItemModel.self)
             .subscribe(onNext: {[weak self] item in
                 let vc = EditViewController(viewModel: .init(item: item))
-                self?.present(vc, animated: true)
+                self?.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)
     }

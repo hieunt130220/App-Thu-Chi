@@ -51,17 +51,9 @@ class InputViewModel: BaseViewModel,BaseViewModelProtocol {
         let observe = Observable.combineLatest(input.date, input.type, input.amount, input.category, input.note)
         input.doneTrigger
             .withLatestFrom(observe)
-            .subscribe(onNext: {[weak self] date,type,amount,category,note in
-                let item = realmManager.realm.objects(ItemModel.self).filter("date = %@ AND category = %@", date.stringWith(format: "dd/MM/yyyy"), category)
-                if let item = item.first {
-                    try! realmManager.realm.write {
-                        item.note = note
-                        item.amount = item.amount + Int(amount)!
-                    }
-                }  else {
-                    let object = ItemModel(type: type == ItemType.income.rawValue ? .income : .spend, date: date.stringWith(format: "dd/MM/yyyy"), note: note, category: category, amount: Int(amount) ?? 0)
-                    realmManager.addObject(object: object)
-                }
+            .subscribe(onNext: {[weak self] date, type, amount, category, note in
+                let object = ItemModel(type: type == ItemType.income.rawValue ? .income : .spend, date: date.stringWith(format: "dd/MM/yyyy"), note: note, category: category, amount: Int(amount) ?? 0)
+                realmManager.addObject(object: object)
                 addSuccess.onNext(true)
                 self?.observe.add(date: date)
             }).disposed(by: disposeBag)

@@ -35,7 +35,9 @@ class ReportViewModel: BaseViewModel, BaseViewModelProtocol {
         let realmManager = RealmDataManager.shared
         var typeSelected = ItemType.spend
         var periodSelected = 0
+        var dateSelected = Date()
         let getAllDataAction: Action<(Date,ItemType,Int),[[String:Any]]> = Action {time,type, period in
+            dateSelected = time
             typeSelected = type
             periodSelected = period
             if period == 0 {
@@ -85,14 +87,47 @@ class ReportViewModel: BaseViewModel, BaseViewModelProtocol {
                 dataChart.onNext(tmp)
             }).disposed(by: disposeBag)
         
-        observe.didUpdateDB.subscribe(onNext: {date in
-            getAllDataAction.execute((date, typeSelected, periodSelected))
-            getTotalAction.execute((date, periodSelected))
-        }).disposed(by: disposeBag)
-        observe.didAddNewItem.subscribe(onNext: {date in
-            getAllDataAction.execute((date, typeSelected, periodSelected))
-            getTotalAction.execute((date, periodSelected))
-        }).disposed(by: disposeBag)
+//        observe.didUpdateDB.subscribe(onNext: {date in
+//            if periodSelected  == 0 {
+//                if dateSelected.month == date.month && dateSelected.year == date.year {
+//                    getAllDataAction.execute((date, typeSelected, periodSelected))
+//                    getTotalAction.execute((date, periodSelected))
+//                }
+//            } else {
+//                if dateSelected.year == date.year {
+//                    getAllDataAction.execute((date, typeSelected, periodSelected))
+//                    getTotalAction.execute((date, periodSelected))
+//                }
+//            }
+//        }).disposed(by: disposeBag)
+//        observe.didAddNewItem.subscribe(onNext: {date in
+//            if periodSelected  == 0 {
+//                if dateSelected.month == date.month && dateSelected.year == date.year {
+//                    getAllDataAction.execute((date, typeSelected, periodSelected))
+//                    getTotalAction.execute((date, periodSelected))
+//                }
+//            } else {
+//                if dateSelected.year == date.year {
+//                    getAllDataAction.execute((date, typeSelected, periodSelected))
+//                    getTotalAction.execute((date, periodSelected))
+//                }
+//            }
+//        }).disposed(by: disposeBag)
+        Observable.merge(observe.didUpdateDB, observe.didAddNewItem)
+            .subscribe(onNext: {date in
+                if periodSelected  == 0 {
+                    if dateSelected.month == date.month && dateSelected.year == date.year {
+                        getAllDataAction.execute((date, typeSelected, periodSelected))
+                        getTotalAction.execute((date, periodSelected))
+                    }
+                } else {
+                    if dateSelected.year == date.year {
+                        getAllDataAction.execute((date, typeSelected, periodSelected))
+                        getTotalAction.execute((date, periodSelected))
+                    }
+                }
+            })
+            .disposed(by: disposeBag)
         return Output(allData: allData.asDriver(onErrorJustReturn: []),
                       totalSpend: totalSpend.asDriver(onErrorJustReturn: 0),
                       totalIncome: totalIncome.asDriver(onErrorJustReturn: 0),

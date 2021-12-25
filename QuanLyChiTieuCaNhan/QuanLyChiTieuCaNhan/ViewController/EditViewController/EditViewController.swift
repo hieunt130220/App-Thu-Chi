@@ -19,6 +19,7 @@ class EditViewController: BaseViewController, BaseViewControllerProtocol {
     @IBOutlet weak var amountTextField: BaseTextField!
     @IBOutlet weak var categoryLabel: UILabel!
     @IBOutlet weak var editButton: ButtonConfirm!
+    let amount = PublishSubject<String>()
     let deleteTrigger = PublishSubject<Void>()
     var viewModel: EditViewModel!
     required init(viewModel: EditViewModel) {
@@ -37,20 +38,38 @@ class EditViewController: BaseViewController, BaseViewControllerProtocol {
         setupViews()
         setupRx()
     }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.tabBarController?.tabBar.isHidden = true
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.tabBarController?.tabBar.isHidden = false
+    }
     func bindingViewModels() {
         let input = EditViewModel.Input(onAppear: self.rx.viewWillAppear.asObservable(),
                                           deleteTrigger: deleteTrigger,
                                           editTrigger: editButton.rx.tap.asObservable(),
-                                          amount: amountTextField.rx.text.orEmpty.asObservable(),
+                                        amount: amount,
                                           note: noteTextView.rx.text.orEmpty.asObservable())
         
         let output = viewModel.transfrom(from: input)
         
-        output.enableButton.drive(editButton.rx.isEnabled).disposed(by: disposeBag)
+        output.amountError.drive{[weak self] error in
+            if error {
+                self?.showAlert(message: "Số tiền phải khác 0", callback: {
+                    
+                })
+            }
+        }.disposed(by: disposeBag)
         
         output.item.drive{[weak self] item in
             self?.dateTextField.text = item.date
-            self?.amountTextField.text = "\(item.amount)"
+            self?.amountTextField.rx.text.onNext("\(item.amount)")
             self?.categoryLabel.text = item.category
             self?.noteTextView.text = item.note
             if item.type == ItemType.spend.rawValue {
@@ -58,12 +77,13 @@ class EditViewController: BaseViewController, BaseViewControllerProtocol {
             } else {
                 self?.typeLabel.text = "Tiền thu"
             }
+            self?.amount.onNext("\(item.amount)")
         }.disposed(by: disposeBag)
         
         output.deleteSuccess.drive{[weak self] success in
             if success {
                 self?.showAlert(message: "Xoá thành công", callback: {
-                    self?.dismiss(animated: true, completion: nil)
+                    self?.navigationController?.popViewController(animated: true)
                 })
             }
         }.disposed(by: disposeBag)
@@ -78,16 +98,17 @@ class EditViewController: BaseViewController, BaseViewControllerProtocol {
     }
     func setupRx() {
         buttonBack.rx.tap.bind{[weak self] in
-            self?.dismiss(animated: true, completion: nil)
+            self?.navigationController?.popViewController(animated: true)
         }.disposed(by: disposeBag)
         buttonDelete.rx.tap.bind{[weak self] in
             self?.showConfirm(message: "Bạn có chắc chắn xoá bản ghi này không?", callback: {
                 self?.deleteTrigger.onNext(())
             })
         }.disposed(by: disposeBag)
+        amountTextField.rx.text.orEmpty.bind(to: amount).disposed(by: disposeBag)
     }
     func setupViews() {
-        editButton.isEnabled = false
+        editButton.isEnabled = true
         noteTextView.placeholder = "Ghi chú thích"
         noteTextView.autocorrectionType = .no
     }

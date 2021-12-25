@@ -29,13 +29,13 @@ class EditViewModel: BaseViewModel, BaseViewModelProtocol {
     struct Output {
         let deleteSuccess: Driver<Bool>
         let editSuccess: Driver<Bool>
-        let enableButton: Driver<Bool>
+        let amountError: Driver<Bool>
         let item: Driver<ItemModel>
     }
     func transfrom(from input: Input) -> Output {
         let deleteSuccess = PublishSubject<Bool>()
         let editSuccess = PublishSubject<Bool>()
-        let enableButton = PublishSubject<Bool>()
+        let amountError = PublishSubject<Bool>()
         let item = PublishSubject<ItemModel>()
         let dataManager = RealmDataManager.shared
         
@@ -53,29 +53,28 @@ class EditViewModel: BaseViewModel, BaseViewModelProtocol {
                 item.onNext(self!.item)
             }).disposed(by: disposeBag)
         
-        Observable.combineLatest(input.note, input.amount)
-            .map{[weak self] note, amount in
-                return (Int(amount) != self!.item.amount && !amount.isEmpty && Int(amount) != 0) || note != self!.item.note
-            }
-            .bind(to: enableButton)
-            .disposed(by: disposeBag)
         input.editTrigger
             .withLatestFrom(Observable.combineLatest(input.note,input.amount))
             .subscribe(onNext: {[weak self] note, amount in
-                let item = dataManager.realm.objects(ItemModel.self).filter("date = %@ AND category = %@", self!.item.date, self!.item.category)
-                if let item = item.first {
-                    try! dataManager.realm.write {
-                        item.note = note
-                        item.amount = Int(amount) ?? 0
-                        editSuccess.onNext(true)
-                        self?.observe.update(date: self!.date)
+                if Int(amount) == 0 || amount.isEmpty {
+                    amountError.onNext(true)
+                } else {
+                    amountError.onNext(false)
+                    let item = dataManager.realm.objects(ItemModel.self).filter("id = %@", self!.item.id)
+                    if let item = item.first {
+                        try! dataManager.realm.write {
+                            item.note = note
+                            item.amount = Int(amount) ?? 0
+                            editSuccess.onNext(true)
+                            self?.observe.update(date: self!.date)
+                        }
                     }
                 }
             })
             .disposed(by: disposeBag)
         return Output(deleteSuccess: deleteSuccess.asDriver(onErrorJustReturn: false),
                       editSuccess: editSuccess.asDriver(onErrorJustReturn: false),
-                      enableButton: enableButton.asDriver(onErrorJustReturn: false),
+                      amountError: amountError.asDriver(onErrorJustReturn: false),
                       item: item.asDriver(onErrorJustReturn: ItemModel()))
     }
 }

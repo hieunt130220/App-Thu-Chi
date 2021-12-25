@@ -61,6 +61,12 @@ class DetailReportViewController: BaseViewController, BaseViewControllerProtocol
         backButton.rx.tap.bind{[weak self] in
             self?.navigationController?.popViewController(animated: true)
         }.disposed(by: disposeBag)
+        
+        tableView.rx.modelSelected(ItemModel.self).subscribe(onNext: {[weak self] item in
+            let vc = EditViewController(viewModel: .init(item: item))
+            self?.navigationController?.pushViewController(vc, animated: true)
+        }).disposed(by: disposeBag)
+        
     }
     func setupViews() {
         self.titleLabel.text = self.viewModel.category
