@@ -85,7 +85,7 @@ class TabbarViewController: UITabBarController {
         
         let inputVC = InputViewController(viewModel: InputViewModel())
         let inputNV = UINavigationController.init(rootViewController: inputVC)
-        let inputItem = UITabBarItem.init(title: "Nhập vào", image: R.image.ic_input(), tag: 1000)
+        let inputItem = UITabBarItem.init(title: "Nhập", image: R.image.ic_input(), tag: 1000)
         inputItem.badgeColor = .black
         inputNV.tabBarItem = inputItem
         

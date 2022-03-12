@@ -56,6 +56,7 @@ class CalendarViewController: BaseViewController, BaseViewControllerProtocol {
         calendar.delegate = self
         tableView.register(UINib(nibName: HistoryTableViewCell.className, bundle: nil), forCellReuseIdentifier: HistoryTableViewCell.className)
         tableView.rowHeight = 70
+        calendar.select(Date(), scrollToDate: false)
     }
     func setupRx() {
         dateSelected.onNext(Date())

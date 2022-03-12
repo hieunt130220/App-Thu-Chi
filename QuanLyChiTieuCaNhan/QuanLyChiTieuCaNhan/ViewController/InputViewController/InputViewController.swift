@@ -62,7 +62,11 @@ class InputViewController: BaseViewController, BaseViewControllerProtocol {
         output.addSuccess.drive{[weak self] isSuccess in
             if isSuccess {
                 self?.showAlert(message: "Thêm thành công", callback: {
-                    
+                    self?.noteTextView.rx.text.onNext("")
+                    self?.moneyTextField.rx.text.onNext("")
+                    self?.categoryCollectionView.reloadData()
+                    self?.categorySelected.accept("")
+                    self?.doneButton.isEnabled = false
                 })
             }
         }.disposed(by: disposeBag)

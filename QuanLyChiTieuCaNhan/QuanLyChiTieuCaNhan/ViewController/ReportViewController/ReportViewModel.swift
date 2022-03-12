@@ -86,33 +86,7 @@ class ReportViewModel: BaseViewModel, BaseViewModelProtocol {
                 }
                 dataChart.onNext(tmp)
             }).disposed(by: disposeBag)
-        
-//        observe.didUpdateDB.subscribe(onNext: {date in
-//            if periodSelected  == 0 {
-//                if dateSelected.month == date.month && dateSelected.year == date.year {
-//                    getAllDataAction.execute((date, typeSelected, periodSelected))
-//                    getTotalAction.execute((date, periodSelected))
-//                }
-//            } else {
-//                if dateSelected.year == date.year {
-//                    getAllDataAction.execute((date, typeSelected, periodSelected))
-//                    getTotalAction.execute((date, periodSelected))
-//                }
-//            }
-//        }).disposed(by: disposeBag)
-//        observe.didAddNewItem.subscribe(onNext: {date in
-//            if periodSelected  == 0 {
-//                if dateSelected.month == date.month && dateSelected.year == date.year {
-//                    getAllDataAction.execute((date, typeSelected, periodSelected))
-//                    getTotalAction.execute((date, periodSelected))
-//                }
-//            } else {
-//                if dateSelected.year == date.year {
-//                    getAllDataAction.execute((date, typeSelected, periodSelected))
-//                    getTotalAction.execute((date, periodSelected))
-//                }
-//            }
-//        }).disposed(by: disposeBag)
+
         Observable.merge(observe.didUpdateDB, observe.didAddNewItem)
             .subscribe(onNext: {date in
                 if periodSelected  == 0 {
