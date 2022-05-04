@@ -7,6 +7,7 @@
 
 import UIKit
 import IQKeyboardManager
+import Firebase
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -16,10 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         IQKeyboardManager.shared().isEnabled = true
         IQKeyboardManager.shared().shouldResignOnTouchOutside = true
-        if UserDefaults.standard.bool(forKey: "isNotFirstLaunch") == false{
-            RealmDataManager.shared.createCategory()
-            UserDefaults.standard.setValue(true, forKey: "isNotFirstLaunch")
-        }
+        FirebaseApp.configure()
         return true
     }
 

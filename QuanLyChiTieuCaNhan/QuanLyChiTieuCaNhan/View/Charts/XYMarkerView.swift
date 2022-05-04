@@ -9,11 +9,11 @@ import UIKit
 import Charts
 
 public class XYMarkerView: BalloonMarker {
-    public var xAxisValueFormatter: IAxisValueFormatter
+    public var xAxisValueFormatter: AxisValueFormatter
     fileprivate var yFormatter = NumberFormatter()
     
     public init(color: UIColor, font: UIFont, textColor: UIColor, insets: UIEdgeInsets,
-                xAxisValueFormatter: IAxisValueFormatter) {
+                xAxisValueFormatter: AxisValueFormatter) {
         self.xAxisValueFormatter = xAxisValueFormatter
         yFormatter.minimumFractionDigits = 1
         yFormatter.maximumFractionDigits = 1
@@ -174,7 +174,7 @@ open class BalloonMarker: MarkerImage {
     }
     
 }
-public class DayAxisValueFormatter: NSObject, IAxisValueFormatter {
+public class DayAxisValueFormatter: NSObject, AxisValueFormatter {
     weak var chart: BarLineChartViewBase?
     init(chart: BarLineChartViewBase) {
         self.chart = chart
@@ -183,7 +183,7 @@ public class DayAxisValueFormatter: NSObject, IAxisValueFormatter {
         return "T\(Int(value))"
     }
 }
-public class ChartValueFormatter: NSObject, IValueFormatter {
+public class ChartValueFormatter: NSObject, ValueFormatter {
     fileprivate var numberFormatter: NumberFormatter?
     
     convenience init(numberFormatter: NumberFormatter) {

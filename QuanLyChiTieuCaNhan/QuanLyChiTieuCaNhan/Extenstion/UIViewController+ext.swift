@@ -12,7 +12,7 @@ import RxCocoa
 extension UIViewController {
     func showAlert(message: String, callback: @escaping (()->())) {
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Xong", style: .cancel, handler: {_ in 
+        alert.addAction(UIAlertAction(title: "Xong", style: .cancel, handler: {_ in
             callback()
         }))
         self.present(alert, animated: true, completion: nil)
@@ -33,8 +33,9 @@ public extension Reactive where Base: UIViewController {
     }
     
     var viewWillAppear: ControlEvent<Void> {
-    
+        
         let source = self.methodInvoked(#selector(Base.viewWillAppear)).map { _ in }
         return ControlEvent(events: source)
     }
 }
+

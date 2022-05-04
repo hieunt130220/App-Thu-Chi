@@ -5,6 +5,48 @@
 //  Created by Nguyễn Trung Hiếu on 11/11/2021.
 //
 import UIKit
+fileprivate var activityIndicatorViewAssociativeKey = "activityIndicatorViewAssociativeKey"
+
+public class RCLoadingView:UIActivityIndicatorView {
+    
+}
+public extension UIView {
+    var activityIndicatorView: RCLoadingView {
+        get {
+            if let activityIndicatorView = objc_getAssociatedObject(self,&activityIndicatorViewAssociativeKey) as? RCLoadingView {
+                bringSubviewToFront(activityIndicatorView)
+                return activityIndicatorView
+            } else {
+                let activityIndicatorView:RCLoadingView = RCLoadingView()
+                activityIndicatorView.layer.cornerRadius = 5
+                activityIndicatorView.backgroundColor = .init(white: 0, alpha: 0.5)
+                activityIndicatorView.style = .large
+                activityIndicatorView.color = .white
+                activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
+                addSubview(activityIndicatorView)
+                bringSubviewToFront(activityIndicatorView)
+                NSLayoutConstraint.activate([
+                    activityIndicatorView.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 0),
+                    activityIndicatorView.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0),
+                    activityIndicatorView.widthAnchor.constraint(equalToConstant: 80),
+                    activityIndicatorView.widthAnchor.constraint(equalTo: activityIndicatorView.heightAnchor, multiplier: 1,constant: 0)
+                    
+                ])
+                
+                objc_setAssociatedObject(self, &activityIndicatorViewAssociativeKey,activityIndicatorView, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+                return activityIndicatorView
+            }
+        }
+        
+        set {
+            addSubview(newValue)
+            bringSubviewToFront(activityIndicatorView)
+            objc_setAssociatedObject(self, &activityIndicatorViewAssociativeKey,newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
+        
+    }
+
+}
 extension UIView{
     
     /// The radius of the view's rounded corners

@@ -1,13 +1,13 @@
 //
-//  ButtonConfirm.swift
+//  AuthButton.swift
 //  QuanLyChiTieuCaNhan
 //
-//  Created by Nguyễn Trung Hiếu on 12/11/2021.
+//  Created by Nguyễn Trung Hiếu on 25/04/2022.
 //
 
 import UIKit
 @IBDesignable
-class ButtonConfirm: UIButton {
+class AuthButton: UIButton {
     override var isEnabled: Bool{
         didSet{
             if isEnabled {
@@ -19,7 +19,7 @@ class ButtonConfirm: UIButton {
                 self.shadowRadius = 6
             } else {
                 self.setTitleColor(.gray, for: .normal)
-                self.backgroundColor = .white
+                self.backgroundColor = .gray.withAlphaComponent(0.2)
                 self.shadowColor = .gray.withAlphaComponent(0.6)
                 self.shadowOffset = CGSize(width: 0, height: 3)
                 self.shadowOpacity = 1
@@ -27,4 +27,9 @@ class ButtonConfirm: UIButton {
             }
         }
     }
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.layer.cornerRadius = self.frame.height / 2
+    }
 }
+

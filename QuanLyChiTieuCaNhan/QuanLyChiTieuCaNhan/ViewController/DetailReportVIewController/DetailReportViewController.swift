@@ -75,7 +75,7 @@ class DetailReportViewController: BaseViewController, BaseViewControllerProtocol
         self.setupchart()
     }
     func setupchart() {
-        barChartView.chartDescription?.enabled = false
+        barChartView.chartDescription.enabled = false
         barChartView.rightAxis.enabled = false
         
         barChartView.delegate = self
